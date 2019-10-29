@@ -1,0 +1,142 @@
+﻿@model WebApplication.Models.User
+
+
+@section Style {
+    <style>
+
+        .simple-container {
+            width: 300px;
+            max-width: 100%;
+            margin: 50px;
+        }
+
+        .simple-container h2 {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .simple-container .btn-login {
+            background-color: #007f42;
+            color: #fff;
+        }
+
+        a {
+            color: #fff;
+        }
+    </style>
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Update</title>
+</head>
+<body>
+    <div class="simple-container">
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <input id="username" type="text" class="form-control" placeholder="uario" value=@ViewBag.UserToEdit.Username required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <input id="name" type="text" class="form-control" placeholder="Nombre" value=@ViewBag.UserToEdit.Name required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <input type="password" id="newPassword" placeholder="Nueva Contraseña" class="form-control" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <input type="password" id="confirmPassword" placeholder="Confirme su Nueva Contraseña" class="form-control" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <input id="role" type="text" class="form-control" placeholder="Rol" value=@ViewBag.UserToEdit.Role required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <input id="email" type="email" class="form-control" placeholder="usuario@example.com" value=@ViewBag.UserToEdit.Email required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <button type="button" class="btn btn-block btn-login">Modificar</button>
+            </div>
+        </div>
+        <label id="passLabel"></label>
+    </div>
+</body>
+</html>
+
+<script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script src="~/js/bootstrap.js"></script>
+<script src="~/js/bootstrap-dialog.min.js" type="text/javascript"></script>
+<script src="~/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="~/js/select2.min.js" type="text/javascript"></script>
+<script src="~/js/es.js" type="text/javascript"></script>
+<script>
+    $("#newPassword").keyup(function () {
+        var VAL = this.value;
+
+        var regex = new RegExp("^(?=.*?[a-z])(?=.*?[0-9]).{8,}$");
+
+        if (!regex.test(VAL)) {
+            $("#passLabel").text("La nueva contraseña debe ser de 8 caracteres y contener al menos un valor numérico.");
+            $("button").prop("disabled", true);
+        }
+        else {
+            $("#passLabel").text("");
+            $("button").prop("disabled", false);
+        }
+    });
+
+    $("button").click(function (e) {
+
+        if ($("#newPassword").val() == $("#confirmPassword").val()) {
+            var pageURLSplit = $(location).attr("href").split("/");
+            var userId = pageURLSplit[pageURLSplit.length - 1];
+            var requestUrl = '/api/users/update/' + userId;
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: requestUrl,
+                type: 'POST',
+                data: JSON.stringify({
+                    Username: $("#username").val(),
+                    Name: $("#name").val(),
+                    Password: $("#newPassword").val(),
+                    Token: null,
+                    Email: $("#email").val(),
+                    Role: $("#role").val()
+                }),
+                success: function (response, textStatus, jqXhr) {
+                    console.log("User Successfully Patched!");
+                    window.alert("Usuario modificado exitosamente");
+                    window.location.replace("/users/index");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // log the error to the console
+                    console.log("The following error occured: " + textStatus, errorThrown);
+                    window.alert("Falló la modificación del usuario");
+                },
+                complete: function () {
+                    console.log("User Patch Ran");
+                }
+            });
+        }
+        else {
+            window.alert("Las contraseñas no coinciden ");
+        }
+
+
+    });
+
+</script>

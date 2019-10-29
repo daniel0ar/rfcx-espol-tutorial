@@ -1,0 +1,48 @@
+@model IEnumerable<WebApplication.Models.Station>
+@{
+    ViewData["Title"] = "Bosque Protector";
+}
+@section Style {
+  <link rel="stylesheet" type="text/css" href="~/css/charts.css">
+}
+
+<div class ="card">
+  <div class="card-body">
+    <h3 class="titleHistoricalView" >Históricos por día</h3>
+    <form class="form-inline justify-content-center">
+      <div class="form-group">
+        <label for="selectStation">Estación:</label>
+        <select class="form-control mr-2" id="selectStation">
+          @foreach (Station station in @Model) {
+            <option value="@(station.Id)">
+              @(station.Name)
+            </option>
+          }
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="startDate">Desde:</label>
+        <input type="date" class="form-control mr-2 date-picker" required="true">   
+      </div>
+      <div class="form-group">
+        <label >Por:</label>
+        <select class="form-control mr-2 range-picker">
+          <option>Semana</option>
+          <option>Mes</option>
+          <option>Año</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-success" id="button-filter">Filtrar</button> 
+    </form>
+  </div>
+</div>
+ 
+<div class="chartsContainer">
+</div>
+
+@section ScriptsIndex {  
+  <script src="~/js/moment.js" type="text/javascript"></script> 
+  <script src="~/js/charts/canvasjs-2.1.2/canvasjs.min.js" type="text/javascript"></script>  
+  <script src="~/js/charts/simple-statistics/simple-statistics.min.js" type="text/javascript"></script>
+  <script src="~/js/charts/byDate.js" type="text/javascript"></script>
+}

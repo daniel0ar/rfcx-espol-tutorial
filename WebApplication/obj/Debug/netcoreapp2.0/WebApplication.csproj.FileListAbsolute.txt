@@ -1,0 +1,11 @@
+/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/obj/Debug/netcoreapp2.0/WebApplication.csprojAssemblyReference.cache
+/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/obj/Debug/netcoreapp2.0/WebApplication.csproj.CoreCompileInputs.cache
+/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/obj/Debug/netcoreapp2.0/WebApplication.AssemblyInfoInputs.cache
+/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/obj/Debug/netcoreapp2.0/WebApplication.AssemblyInfo.cs
+/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/bin/Debug/netcoreapp2.0/WebApplication.deps.json
+/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/bin/Debug/netcoreapp2.0/WebApplication.runtimeconfig.json
+/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/bin/Debug/netcoreapp2.0/WebApplication.runtimeconfig.dev.json
+/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/bin/Debug/netcoreapp2.0/WebApplication.dll
+/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/bin/Debug/netcoreapp2.0/WebApplication.pdb
+/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/obj/Debug/netcoreapp2.0/WebApplication.dll
+/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/obj/Debug/netcoreapp2.0/WebApplication.pdb

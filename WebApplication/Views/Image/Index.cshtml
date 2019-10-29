@@ -1,0 +1,82 @@
+@model WebApplication.ViewModel.ImageViewModel
+
+
+@{
+    ViewBag.Title = "Imagenes";
+}
+
+@section Style {
+    <style>
+        #div_tabla_especies {
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+
+        .modal-footer {
+            text-align: center !important;
+        }
+
+        #imagen {
+            display: block;
+            margin: auto;
+            width: 60%;
+        }
+    </style>
+}
+<div id="principal">
+    <div class="body-wrapper container">
+        <h2> Descarga de Imagenes </h2>
+        <br>
+        <form asp-controller="Image" asp-action="Search" method="get" role="form">
+            <div class="form-row">
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend"> 
+                            <div class="input-group-text">Estación</div>
+                        </div>
+                        @Html.DropDownListFor(m => m.StationId,
+                                                new SelectList(Model.estaciones.Select(x => new { Value = x.Id, Text = x.Name}), "Value", "Text"),
+                                                "Estación", htmlAttributes: new { @class = "form-control" })
+                        <span asp-validation-for="estaciones" class="text-danger"></span>                       
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend"> 
+                            <div class="input-group-text">Fecha Inicial</div>
+                        </div>
+                        <input asp-for="Start" class="form-control" type="date">
+                        <span asp-validation-for="Start" class="text-danger"></span>                       
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend"> 
+                            <div class="input-group-text">Fecha Final</div>
+                        </div>
+                        <input asp-for="End" class="form-control" type="date">
+                        <span asp-validation-for="End" class="text-danger"></span>                     
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button id="search" type="submit" class="btn btn-primary" >Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            $('#estaciones').select2({
+                placeholder: "Escoja una opción",
+                language: "es"
+            });
+        });
+
+
+    </script>
+
+}

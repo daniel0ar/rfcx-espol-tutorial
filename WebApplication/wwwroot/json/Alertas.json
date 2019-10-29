@@ -1,0 +1,2 @@
+{"_id":{"$oid":"5ae260ea294d5d816753b677"},"id_audio":1.0,"clasificado":true,"algoritmo":"Support Vector Machines"}
+{"_id":{"$oid":"5ae26119294d5d816753b678"},"id_audio":1.0,"clasificado":true,"algoritmo":"Support Vector Machines","tipo":"Disparo","estado":false}

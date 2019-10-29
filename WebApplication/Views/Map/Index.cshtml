@@ -1,0 +1,48 @@
+@{
+    ViewBag.Title = "Bosque";
+}
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Mapa</title>
+  <link rel="stylesheet" href="~/css/index.css" />
+
+<div id="map"></div>
+
+@section ScriptsIndex {
+  <script src="~/js/map.js"></script>
+  <script>
+    $(window).on('load',function(){
+    stations=[];//{1:{"sensorsId":[],"content":<>,"lat": -2.3,"long": -64.3}}
+
+    function getDataDisp(data){
+      var dataDic = JSON.parse(data);
+      for(station of dataDic){
+        var latitud = parseFloat(station['Latitude']);
+        var longitud = parseFloat(station['Longitude']);
+        var idStation=station['Id'];
+        var nameStation=station['Name'];
+
+        var contentString = '<div id="contentInfo">'+
+                    '<h3 id="firstHeading" class="firstHeading"> @Html.ActionLink("titulo", "Index", "StationView", new { stationName = "stationNameValue", stationId = "stationIdVal" })</h3>'+
+                    '<div id="bodyContent" style="width: 125px;">';
+        contentString = contentString.replace("titulo", nameStation);
+        contentString = contentString.replace("stationNameValue", nameStation);
+        contentString = contentString.replace("stationIdVal", idStation);
+
+        stationsDic = {};
+        stationsDic["content"] = contentString;
+        stationsDic["lat"]=latitud;
+        stationsDic["long"]=longitud;
+        stationsDic["sensorsId"] = [];
+        stations[idStation] = stationsDic;
+      }
+      getDataSensor();
+    }
+    $.get('api/Station/', getDataDisp);
+    });
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFXwpsfDP00RgZGAlNum0MVhHdP0X0IP0">
+    </script>
+}

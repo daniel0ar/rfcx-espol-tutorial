@@ -1,0 +1,377 @@
+@model WebApplication.Models.Alert
+@{
+    ViewBag.Title = "Editar Alerta";
+}
+@section Style {
+    <style>
+        #titulo {
+            text-align: center;
+        }
+
+        #boton_alerta {
+            text-align: left;
+            margin-top: 20px;
+            margin-bottom: 65px;
+        }
+        
+        #subtitulo {
+            margin-bottom: 5px;
+        }
+
+        #formulario {
+            margin-left: 0;
+        }
+
+        textarea {
+            resize:none;
+        }
+
+        .condition-container {
+            margin: 10px;
+            padding: 5px;
+        }
+
+    </style>
+}
+<div class="container">
+    <div id="formulario" class="row">
+        <form id="form_editar_alerta" class="form-row" method="post" enctype="multipart/form-data" action="/api/alert/@Model.AlertId">
+            <div id="titulo" class="form-group col-lg-12 col-md-12">
+                <h2>Edición de alerta</h2>
+            </div>
+            <div class="form-group col-lg-12 col-md-12">
+                <label>Nombre: </label>
+                <input id="nombre_alerta" class="form-control" type="text" name="nombre_alerta" value="@Model.Name" required>
+            </div>
+            <div class="form-group col-lg-12 col-md-12">
+                <label>Nivel: </label>
+                <select id="tipo_alerta" name="tipo_alerta" class="form-control" alerttype="@Model.AlertType" required="">
+                    <option value="" hidden="">Escoja una opción</option>
+                        <option value="3">3 - Incidente Crítico</option>
+                        <option value="2">2 - Emergencia Situacional</option>
+                        <option value="1">1 - Crisis</option>
+                </select>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <a id="info-niveles" class="text-muted" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Mas información sobre los niveles</a>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <ul>
+                            <li><p class="text-info">3: A Level Three emergency is a minor emergency or critical incident that has the potential to require more resources than the responding department has available</p></li>
+                            <li><p class="text-warning">2: A Level Two emergency is one that requires a major response and the significant commitment of resources from several University departments or units, but will still be within the capabilities of the University to control</p></li>                        
+                            <li><p class="text-danger">1: A Level One emergency is a major emergency, major crisis, or disaster that requires an extensive response and commitment of resources from many departments/units and usually requires outside assistance</p></li>
+                        </ul>
+                        <a class="tex-muted" href="https://www.gallaudet.edu/public-safety/emergency-preparedness-guide/definitions-of-types-and-levels-of-emergencies">Fuente ↪</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <label>Correos a Notificar: </label>
+                <input id="correos_notificacion" class="form-control" type="text" name="correos_notificacion" value="@String.Join(';',Model.Mailto.ToArray())" required>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <p class="text-muted">Ingrese cada correo separado por ;</p>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <label>Mensaje: </label>
+                <textarea id="mensaje_alerta" class="form-control" type="text" name="mensaje_alerta" rows="3" required>@Model.Message</textarea>
+            </div>
+            <div id="subtitulo" class="form-group col-lg-12 col-md-12">
+                <h4>Notificar cuando: </h4>
+            </div>
+            <input id="conditions_number" hidden="" name="conditions_number" value="@Model.Conditions.Count()"></input>
+            <div id="conditions">
+                @for (var i = 1; i <= @Model.Conditions.Count(); i++)
+                {
+                    <div class="condition-container form-row align-items-center">
+                        <div class="col-auto">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend"> 
+                                    <div class="input-group-text">Estación</div>
+                                </div>
+                                <select class="form-control" id='estacion_alerta_@i' name='estacion_alerta_@i' sel=@Model.Conditions[i-1].StationId>
+                                    <option hidden="" value="">Escoja una opción</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend"> 
+                                    <div class="input-group-text">Sensor</div>
+                                </div>
+                                <select class="form-control" id="sensor_alerta_@i" name="sensor_alerta_@i" sel="@Model.Conditions[i-1].SensorId">
+                                    <option hidden="" value="">Escoja una opción</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend"> 
+                                    <div class="input-group-text">Condición</div>
+                                </div>
+                                <select class="form-control" id="condicion_alerta_@i" name="condicion_alerta_@i" sel="@Model.Conditions[i-1].Comparison">
+                                <option hidden="" value="">Escoja una opción</option>
+                                <option value="NO DATA" onclick="changeFreqLabel(@i)">no recibe datos</option>
+                                <option value="MAYOR QUE">mayor que</option>
+                                <option value="MENOR QUE">menor que</option>
+                                <option value="IGUAL QUE">igual que</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend"> 
+                                    <div id="valor_div_@i" class="input-group-text">Valor</div>
+                                </div>
+                                <input class="form-control" id="threshold_alerta_@i" name="threshold_alerta_@i" type="text" value=@Model.Conditions[i-1].Threshold>
+                            </div>
+                        </div>
+                        <a class="btn btn-danger" onclick="deleteConditionContainer(@i)"><i class="fa fa-x"></i></a>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-12">
+                <label> </label>
+                <a class="btn btn-primary" onclick="addCondition()"><i class="fa fa-plus-circle"></i></a>
+            </div>
+            <div id="boton_alerta" class="form-group col-lg-12 col-md-12">
+                <button class="btn btn-primary" >Editar Alerta</button>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        var i = 0;
+
+        
+        $(document).ready(function(){
+            i = $('#conditions_number').attr('value');
+            addSelectedAlertType();
+            addSelectedConditionInfo();
+            alert_input_changed = [];
+        });
+        
+        $("#formulario .form-control").change(function () {
+            var input_id = $(this).attr("id");
+            if(!alert_input_changed.includes(input_id)) {
+                alert_input_changed.push(input_id);
+            }
+        });
+
+        function addSelectedAlertType(){
+            alerttype = $('#tipo_alerta').attr('alerttype');
+            $("#tipo_alerta option[value="+alerttype+"]").prop('selected', true);
+        }
+        
+        function addCondition(){
+            i++;
+
+            $('#conditions_number').attr('value',i);
+            let divContainer = $('<div></div>');
+            divContainer.attr('class','condition-container form-row align-items-center');
+            divContainer.attr('id','condition-container_'+i)
+
+
+            let selectStation = $('<select></select>');
+            addAttributes(selectStation, 'estacion');
+            appendDefaultOption(selectStation);
+            divContainer.append(buildField("Estación", selectStation));
+
+            let selectSensor = $('<select></select>');
+            addAttributes(selectSensor, 'sensor');
+            appendDefaultOption(selectSensor);
+            divContainer.append(buildField("Sensor", selectSensor));
+
+            let nodata = $('<option></option>');
+            nodata.attr('value','NO DATA');
+            nodata.text('no recibe datos');
+            nodata.attr('onclick','changeFreqLabel('+i+')')
+            let mayorque = $('<option></option>');
+            mayorque.attr('value', 'MAYOR QUE');
+            mayorque.text("mayor que");
+            let menorque = $('<option></option>');
+            menorque.attr('value','MENOR QUE');
+            menorque.text("menor que");
+            let igualque = $('<option></option>');
+            igualque.attr('value','IGUAL QUE');
+            igualque.text("igual que");
+            let selectCondition = $('<select></select>');
+            addAttributes(selectCondition, 'condicion');
+            appendDefaultOption(selectCondition);
+            selectCondition.append(nodata);
+            selectCondition.append(mayorque);
+            selectCondition.append(menorque);
+            selectCondition.append(igualque);
+            divContainer.append(buildField("Condición", selectCondition));
+
+            let inputValue = $('<input></input>');
+            addAttributes(inputValue, 'threshold');
+            inputValue.attr('type','text');
+            divContainer.append(buildField("Valor", inputValue, i));
+
+            let deleteButton = $('<a></a>').addClass('btn btn-danger');
+            deleteButton.attr('onclick','deleteConditionContainer('+i+')');
+            let icon = $('<i></i>').addClass('fa fa-remove');
+            deleteButton.append(icon);
+            divContainer.append(deleteButton);
+
+            $("#conditions").append(divContainer);
+
+            addStations();
+            addOnChange();
+        }
+
+        function buildField(nameFieldString, inputField, i=""){
+            let divField = $('<div></div>').addClass('col-auto');
+            let divGroup = $('<div></div>').addClass('input-group mb-2');
+            let divPrepend = $('<div></div>').addClass('input-group-prepend');
+            let divText = $('<div></div>').addClass('input-group-text');
+            if (nameFieldString == "Valor"){
+                divText.attr('id','valor_div_'+i);
+                divField.addClass('col-sm-2');
+            }
+            divText.text(nameFieldString);
+            divPrepend.append(divText);
+            divGroup.append(divPrepend);
+
+            divGroup.append(inputField);
+            divField.append(divGroup);
+            return divField;
+        }
+
+        function appendDefaultOption(select){
+            let defaultOption = $('<option></option>');
+            defaultOption.attr('hidden','""');
+            defaultOption.attr('value','""');
+            defaultOption.text('Escoja una opción');
+            select.append(defaultOption);
+        }
+
+        function addAttributes(input, inputname){
+            input.attr('class', 'form-control');
+            input.attr('name', inputname+'_alerta_'+i);
+            input.attr('id', inputname+'_alerta_'+i);
+        }
+
+        function addStations(){
+            $.ajax({
+                url:"/api/Station/list",
+                dataType:'json',
+                async: false,
+                success: function(response) {
+                    $.each(response, function(idx, station) {
+                        let option = $("<option></option>");
+                        option.text(station.Name);
+                        option.attr("id",station.Id)
+                        option.attr("value",station.Id)
+                        $("#estacion_alerta_"+i).append(option);
+                    });
+                }
+            });
+        }
+
+
+        function addOnChange() {
+           $("#estacion_alerta_"+i).change(function(){
+                let id = $(this).val();
+                $.ajax({
+                    url:"/api/Station/"+id+"/Sensor",
+                    dataType:'json',
+                    async: false,
+                    success: function(response) {
+                        $("#sensor_alerta_"+i).empty();
+                        $.each(response, function(idx, sensor) {
+                            let option = $("<option></option>");
+                            let name = sensor.Type + " - " + sensor.Location;
+                            option.text(name);
+                            option.attr("value",sensor.Id);
+                            $("#sensor_alerta_"+i).append(option);
+                        });
+                    }
+                });
+            });
+        }
+
+        function addSelectedConditionInfo() {
+            for (let idx=1; idx <= i; idx++){
+                $.ajax({
+                    url:"/api/Station/list",
+                    dataType:'json',
+                    async: true,
+                    success: function(response) {
+                        $.each(response, function(idx2, station) {
+                            let option = $("<option></option>");
+                            option.text(station.Name);
+                            option.attr("id",station.Id)
+                            option.attr("value",station.Id)
+                            if (station.Id == $("#estacion_alerta_"+idx).attr('sel')){
+                                option.prop('selected', true);
+                            }
+                            $("#estacion_alerta_"+idx).append(option);
+                            addSelectedSensor(idx, station)
+                        });
+                    }
+                });
+
+                
+                $("#estacion_alerta_"+idx).change(function(){
+                let id = $(this).val();
+                $.ajax({
+                    url:"/api/Station/"+id+"/Sensor",
+                    dataType:'json',
+                    async: true,
+                    success: function(response) {
+                        $("#sensor_alerta_"+idx).empty();
+                        $.each(response, function(idx2, sensor) {
+                            let option = $("<option></option>");
+                            let name = sensor.Type + " - " + sensor.Location;
+                            option.text(name);
+                            option.attr("value",sensor.Id);
+                            $("#sensor_alerta_"+idx).append(option);
+                        });
+                    }
+                });
+                });
+                addSelectedCondition(idx);
+            }
+            
+        }
+
+
+        function addSelectedSensor(idx, station){
+           $.ajax({
+                url:"/api/Station/"+station.Id+"/Sensor",
+                dataType:'json',
+                async: true,
+                success: function(response) {
+                    $("#sensor_alerta_"+idx).empty();
+                    $.each(response, function(idx2, sensor) {
+                    let option = $("<option></option>");
+                    let name = sensor.Type + " - " + sensor.Location;
+                    option.text(name);
+                    option.attr("value",sensor.Id);
+                    if (sensor.Id == $("#sensor_alerta_"+idx).attr('sel'))
+                        option.prop('selected', true);
+                    $("#sensor_alerta_"+idx).append(option);
+                    });
+                }
+            }); 
+        }
+
+        function addSelectedCondition(idx){
+            condicion_alerta = $('#condicion_alerta_'+idx).attr('sel');
+            $("#condicion_alerta_"+idx+" option[value='"+condicion_alerta+"']").prop('selected', true);
+        }
+        
+        function changeFreqLabel(i){
+            $("#valor_div_"+i).text('Frecuencia');
+        }
+
+        function deleteConditionContainer(idx){
+            i--;
+            $('#condition-container_'+idx).remove();
+        }
+
+    </script>
+}

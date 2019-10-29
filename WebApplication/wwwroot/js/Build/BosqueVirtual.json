@@ -1,0 +1,13 @@
+{
+"companyName": "ESPOL",
+"productName": "Bosque Virtual",
+"dataUrl": "BosqueVirtual.data.unityweb",
+"asmCodeUrl": "BosqueVirtual.asm.code.unityweb",
+"asmMemoryUrl": "BosqueVirtual.asm.memory.unityweb",
+"asmFrameworkUrl": "BosqueVirtual.asm.framework.unityweb",
+"TOTAL_MEMORY": 1073741824,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20"
+}

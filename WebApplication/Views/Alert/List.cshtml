@@ -1,0 +1,346 @@
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Common;
+@model AlertViewModel
+@{
+    ViewBag.Title = "Alertas";
+}
+@section Style {
+    <style>
+        h2 {
+            margin-top: 10px;
+            text-align: center;
+        }
+        #div_tabla_alertas {
+            margin-top: 20px;
+            margin-bottom: 50.);
+        }
+        #div_boton_nuevo {
+            margin: 20px 0;
+        }
+        h4#modal_alert_label {
+            color: white;
+        }
+        .modal-header.alert-danger button.close{
+            color: white;
+            opacity: 1;
+        }
+        .modal-header.alert-danger {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            background-color: #d9534f;
+        }
+        .modal-footer {
+            text-align: center !important;
+        } 
+
+        button {
+            margin: 5px !important;
+        }
+
+        /* The switch - the box around the slider */
+        .switch {
+        position: relative;
+        display: inline-block;
+        width: 54px;
+        height: 30px;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        }
+
+        /* The slider */
+        .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        .slider:before {
+        position: absolute;
+        content: "";
+        height: 23px;
+        width: 23px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        input:checked + .slider {
+        background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+        -webkit-transform: translateX(23px);
+        -ms-transform: translateX(23px);
+        transform: translateX(23px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+        border-radius: 34px;
+        }
+
+        .slider.round:before {
+        border-radius: 50%;
+        }
+
+    </style>
+}
+<div id="principal">
+    <div class="body-wrapper container">
+        <h2>Alertas</h2>
+        <div id="div_boton_nuevo">
+            <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create","Alert")'"><i class="fa fa-plus-circle"></i></button>
+        </div>
+
+        <!-- Pop ups with return messages-->
+        @if(((int) TempData["editResult"]) == 1) {
+            <div id="alerta" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                La alerta ha sido editada correctamente
+            </div>
+        } else if(((int) TempData["editResult"]) == -1) {
+            <div id="alerta" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                Hubo un problema al editar la alerta. Por favor, vuelva a intentarlo.
+            </div>
+        }
+
+        @if(((int) TempData["createResult"]) == 1) {
+            <div id="alerta" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                La alerta ha sido creada correctamente
+            </div>
+        } else if(((int) TempData["createResult"]) == -1) {
+            <div id="alerta" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                Hubo un problema al crear la alerta. Por favor, vuelva a intentarlo.
+            </div>
+        }
+
+        @if(((int) TempData["deleteResult"]) == 1) {
+            <div id="alerta" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                La alerta ha sido eliminada correctamente
+            </div>
+        } else if(((int) TempData["deleteResult"]) == -1) {
+            <div id="alerta" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                Hubo un problema al eliminar la alerta. Por favor, vuelva a intentarlo.
+            </div>
+        }
+        
+        <form asp-controller="Alert" asp-action="List" method="post" role="form">
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <label class="sr-only" for="alert_name">Nombre Alerta</label>
+                    <input asp-for="FilterName" type="text" class="form-control mb-2" id="alert_name" placeholder="Nombre de la alerta"></input>
+                </div>
+
+                <div class="col-auto">
+                    <button class="btn btn-primary mb-2" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
+        
+
+        <div id="div_tabla_alertas">
+            <table id="tabla_alertas" class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Nivel</th>
+                        <th>Activo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var alert in Model.Alerts)
+                    {
+                        <tr>
+                            <td>@alert.Name</td>
+                            <td>@alert.AlertType</td>
+                            <td style="text-align: center;">
+                                <label class="switch" id='switch_@alert.AlertId'>
+                                    @if (alert.Status) {<input id="checkbox-status_@alert.AlertId" type="checkbox" onclick="mostrarAdvertenciaStatus('@alert.AlertId','@alert.Status');" checked>}
+                                    else {<input id="checkbox-status_@alert.AlertId" type="checkbox" onclick="editarStatus('@alert.AlertId','@alert.Status');"> }
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td style="text-align: center;">
+                                <button class="btn btn-primary" onclick="editarAlerta('@alert.AlertId');"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-danger" onclick="mostrarAdvertencia('@alert.AlertId');"><i class="fa fa-times-circle"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+            <form id="hidden" asp-controller="Alert" asp-action="Index" method="get" role="form">
+                @Html.HiddenFor(m => m.Pnumber)
+                @if (Model.Alerts != null)
+                {
+                    @Html.PagedListPager(Model.Alerts, page => Url.Action("Index", new { page = page }),
+                        new PagedListRenderOptions {
+                            PageClasses = new string[] { "pages" },
+                        });
+                }
+            </form>
+        </div>
+
+        <div class="modal fade" id="alert_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header alert-danger">
+                        <button type="button" class="close" style="margin-top: 1px" onclick="cerrarModal();">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modal_alert_label">ADVERTENCIA</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Se borrará la alerta. Esta acción no puede revertirse. ¿Desea continuar?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="accept" class="btn btn-danger" onclick="">Aceptar</button>
+                        <button id="cancel" class="btn btn-default" onclick="cerrarModal();">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="alert_modal_status" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header alert-danger">
+                        <button type="button" class="close" style="margin-top: 1px" onclick="cerrarModalStatus();">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modal_alert_label">ADVERTENCIA</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>La alerta dejará de estar activa. ¿Desea continuar?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="acceptStatus" class="btn btn-danger" onclick="">Aceptar</button>
+                        <button id="cancelStatus" class="btn btn-default" onclick="cerrarModalStatus();">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        function mostrarAdvertencia(id) {
+            $("#accept").attr("onclick", "eliminarAlerta('" + id + "');");
+            $("#alert_modal").modal("show");
+        }    
+
+        function cerrarModal() {
+            $("#alert_modal").modal("hide");
+        }
+
+        function mostrarAdvertenciaStatus(id,status) {
+            status = status.toLowerCase();
+            $("#acceptStatus").attr("onclick", "editarStatus('" + id + "','" + status + "');");
+            $("#alert_modal_status").modal("show");
+            $("#alert_modal_status").attr('alertid',id)
+        }    
+
+        function cerrarModalStatus() {
+            $("#alert_modal_status").modal("hide");
+            let alertid = $("#alert_modal_status").attr('alertid')
+            $('#checkbox-status_'+alertid).prop("checked",true);
+        }
+
+        function eliminarAlerta(id) {
+            $.ajax({
+                url: "/api/alert/" + id + "/",
+                type: 'DELETE',
+                async: false,
+                success: function() {
+                    window.location.href = '@Url.Action("Index","Alert")';
+                }
+            });
+        }
+
+        function editarAlerta(id) {
+            window.location.href = '/api/alert/' + id + '/edit/';
+        }
+
+        function editarStatus(id, status) {
+            status = (status == 'true')
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                    url: "/api/alert/" + id + "/Status",
+                    type: 'PATCH',
+                    async: true,
+                    data: JSON.stringify(!status),
+                    success: function() {
+                        window.location.href = '@Url.Action("Index","Alert")';
+                    }
+            });
+        }
+
+
+        function editarAlerta(id) {
+            window.location.href = '/api/alert/' + id + '/edit/';
+        }
+
+        $(".pages").bind('click', function(e){
+            e.preventDefault();
+            var value = this.text;
+            switch(value) {
+                case '>':
+                    value = parseInt($(".active span").text()) + 1;
+                    break;
+                case '<':
+                    value = parseInt($(".active span").text()) - 1;
+                    break;
+                case '<<':
+                    value = 1;
+                    break;
+                case '>>':
+                    value = @Model.Alerts.PageCount;
+                    break;
+                default:
+                    value = this.text;
+            }
+            if (value == '>' || value == '<') {
+            }
+            $("#Pnumber").val(parseInt(value));
+            $("#hidden").submit();
+        });
+
+
+    </script>
+}

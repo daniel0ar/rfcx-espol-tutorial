@@ -1,0 +1,86 @@
+#map {
+  width: 100%;
+  height: 530px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+#firstHeading{
+  font-size: 1.33em;
+  margin: 2px;
+  padding-bottom: 5px;
+  border-bottom: 1px #8b8080 solid;
+  margin-bottom: 15px;
+  text-align: center;
+}
+#firstHeading a{
+  /*color: #007f42 !important;*/
+  color: #8b8080 !important; 
+  text-decoration: none !important;
+}
+#firstHeading a:hover{
+  color: #e09913 !important;
+}
+p{
+  margin: 2px;
+}
+#sensor{
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-style: italic;
+}
+.valueHum, .valueTempAmb , .valueTempDisp{
+  font-size: 13px;
+  line-height: 1.9;
+}
+.sensor-title{
+  font-size: 13px; 
+  float: left;
+  margin-right: 5px;
+}
+.fa{
+  font-size: 19px;
+}
+
+.historical{
+  margin-top:2%;
+  margin-bottom: 5%;
+}
+
+@media (max-width: 480px) {
+  #map {
+    height: 455px;
+  }
+  #firstHeading {
+    font-size: 1.13em;
+  }
+  .sensor-title{
+    font-size: 12px;
+  }
+  .valueHum, .valueTempAmb , .valueTempDisp{
+    font-size: 12px;
+    line-height: 2.3;
+  }
+  .fa{
+    font-size: 16px;
+  }
+}
+@media (max-width: 360px) {
+  #map {
+    height: 456px;
+  }
+  #firstHeading {
+    font-size: 1.13em;
+  }
+  .sensor-title{
+    font-size: 12px;
+  }
+  .valueHum, .valueTempAmb , .valueTempDisp{
+    font-size: 12px;
+    line-height: 2.3;
+  }
+  .fa{
+    font-size: 16px;
+  }
+  
+}

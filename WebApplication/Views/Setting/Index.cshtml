@@ -1,0 +1,84 @@
+﻿
+@using Microsoft.Extensions.FileProviders
+@model IndexModel
+
+@{
+    ViewBag.Title = "Setting";
+}
+<!-- Favicon -->
+<link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">    
+
+<!-- Main style sheet -->
+<link href="~/css/site.css" rel="stylesheet">    
+
+<!-- Google Fonts -->
+
+<!-- Prata for body  -->
+<link href='https://fonts.googleapis.com/css?family=Prata' rel='stylesheet' type='text/css'>
+<!-- Tangerine for small title -->
+<link href='https://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css'>   
+<!-- Open Sans for title -->
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+
+
+<!-- Start About us -->
+<section id="mu-about-us">
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="mu-about-us-area">
+
+        <div class="mu-title">
+          <br />
+          <h2> Configuraciones </h2>
+        </div>
+
+	<form>
+          <div class="form-group">
+            <table class="table table-bordered" id="vertical-table">
+              
+              <tr><th><label for="ddl"> Estación </label></th> 
+                <td> <input class="form-control"/> </td>              
+              </tr>
+
+              <tr><th><label> Sensor </label></th>
+                <td>@Html.DropDownList("day", new SelectList(new Dictionary<string,string> { 
+                  { "1", "Temperatura" }, { "2","Humedad" }, 
+                  { "3","..." }, { "4","..." } },
+                  "Key", "Value", "Monthly"))
+                </td>              
+              </tr>
+          
+              <tr><th><label> Acción </label></th>
+                <td> <input class="form-control"/> </td>
+              </tr>  
+              <tr>
+                <td><td> <input type="number"/>  -  <input type="number"/> </td></td>
+              </tr>
+              <tr><th><label> Notificación </label></th>
+                <td> <input class="form-control"/> </td>              
+              </tr>  
+
+              <tr><th><label> Receptor </label></th>
+                <td> <input class="form-control"/></td>
+              </tr>  
+
+              <tr><th><label> Repetir </label></th>
+                <td> <input class="form-control"/></td>
+              </tr>  
+
+            </table>
+
+        
+            <br />
+            <button type="button" class="out">Guardar</button><br /><br /><br /> 
+          </div>        
+        </form>                                        
+      </div>
+    </div>      
+  </div>
+</div>
+</section>
+

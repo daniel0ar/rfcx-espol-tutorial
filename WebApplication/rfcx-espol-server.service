@@ -1,0 +1,14 @@
+[Unit]
+ Description=Rfcx Espol Server ASP.NET Core App
+
+ [Service]
+ WorkingDirectory=/var/rfcx-espol-server/
+ ExecStart=/usr/bin/dotnet /var/rfcx-espol-server/WebApplication.dll
+ Restart=always
+ RestartSec=10
+ SyslogIdentifier=dotnet-rfcx-espol-server
+ Environment=ASPNETCORE_URLS=http://*:80
+ Environment=ASPNETCORE_ENVIRONMENT=Production 
+
+ [Install]
+ WantedBy=multi-user.target

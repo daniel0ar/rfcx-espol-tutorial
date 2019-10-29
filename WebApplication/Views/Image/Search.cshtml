@@ -1,0 +1,198 @@
+@using WebApplication.ViewModel;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model ImageViewModel
+@{
+    ViewBag.Title = "Imagenes";
+}
+
+@section Style {
+    <style>
+        #imagen {
+            position: static;
+            display: block;
+            
+            width: 80%;
+            
+            border-radius: 2%;
+            align-self: center;
+            margin:auto;
+        }
+        #titulo {
+            text-align: center;
+        }
+         #titulo1 {
+            text-align: center;
+            width: 250px;
+        }
+    </style>
+    <link rel="stylesheet" href="~/css/audios.css">
+}
+
+<!-- Modal alert-->
+<div class="modal fade" id="alert_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header alert-danger">
+				<button type="button" class="close" style="margin-top: 1px" onclick="closeModal(2)">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="modal_alert_label">ADVERTENCIA</h4>
+			</div>
+			<div class="modal-body">
+				<p>Se eliminará el archivo del servidor y de la base de datos. Esta operación es irreversible.
+                    ¿Desea continuar?
+				</p>
+				<input id="st_id" type="hidden"/>
+			</div>
+			<div class="modal-footer">
+				<button id="accept" class="btn btn-danger" onclick="deleteStation()">Aceptar</button>
+				<button id="cancel" class="btn btn-default" onclick="closeModal(2)">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="principal">
+    <div class="body-wrapper container">
+        <h2> Descarga de Imagenes </h2>
+        <br>
+        <form asp-controller="Image" asp-action="Search" method="get" role="form">
+            <div class="form-row">
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Estación</div>
+                        </div>
+                        @Html.DropDownListFor(m => m.StationId,
+                                                new SelectList(Model.estaciones.Select(x => new { Value = x.Id, Text = x.Name}), "Value", "Text"),
+                                                "Estación", htmlAttributes: new { @class = "form-control" })
+                        <span asp-validation-for="estaciones" class="text-danger"></span>                       
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend"> 
+                            <div class="input-group-text">Fecha Inicial</div>
+                        </div>
+                        <input asp-for="Start" class="form-control" type="date">
+                        <span asp-validation-for="Start" class="text-danger"></span>                       
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend"> 
+                            <div class="input-group-text">Fecha Final</div>
+                        </div>
+                        <input asp-for="End" class="form-control" type="date">
+                        <span asp-validation-for="End" class="text-danger"></span>                     
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button id="search" type="submit" class="btn btn-primary" >Buscar</button>
+                </div>
+            </div>
+        </form>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <th id="titulo"><input type="checkbox" id="selectAll"><label>ID</label></th>
+                    <th id="titulo1" >Foto</th>
+                    <th>Fecha de Creación</th>
+                    <th>Fecha de Subida</th>
+                    <th>Etiqueta</th>
+                    <th>Acciones</th>
+                </thead>
+                <tbody>
+                    @if (Model.Images != null)
+                    {
+                        @foreach (var image in Model.Images)
+                        {
+                            <tr>
+                                <td><input type="checkbox" class="check dl" value="@image.Id">@image.id</td>
+                                <td><img id="imagen" value="@image.Path" class="img-responsive" src="/resources/images/@image.StationId/@image.Path" ></td>
+                                <td style="display:none" >@image.Path</td>
+                                <td>@image.CaptureDate</td>
+                                <td>@image.ArriveDate</td>
+                                <td>
+                                    @if (image.Tag != null)
+                                    {
+                                        @foreach (var tag in image.Tag)
+                                        {
+                                            <span>@tag</span>
+                                        }
+                                    } 
+                                    else 
+                                    {
+                                        <span class="no-tags">No hay etiquetas.</span>
+                                    }
+                                    
+                                </td>
+                                
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="showAlertModal(@image.Id)" title="Eliminar imagen"><i class="fa fa-times" aria-hidden="true" style="font-size:20px;"></i></button>
+                                    <button class="btn btn-primary btn-sm" onclick="newTag(this, @image.Id)" title="Añadir etiqueta"><i class="fa fa-tags" aria-hidden="true" style="font-size:20px"></i></button>                                                
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <br>
+            <form id="hidden" asp-controller="Image" asp-action="Search" method="get" role="form">
+                
+                @Html.HiddenFor(m => m.StationId)
+                @Html.HiddenFor(m => m.Start)
+                @Html.HiddenFor(m => m.End)
+                @Html.HiddenFor(m => m.Pnumber)
+            @if (Model.Images != null)
+            {
+                @Html.PagedListPager(Model.Images, page => Url.Action("List", new { page = page }),
+                    new PagedListRenderOptions {
+                        PageClasses = new string[] { "pages" },
+                    });
+                <button type="button" class="btn btn-primary download" onclick="downloadImagenes()">Descargar Imagenes</button>
+            }
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script src="~/js/download.js"></script> 
+    <script src="~/js/images.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.pagination a').addClass('btn btn-light');
+            $('.active .pages').addClass('btn btn-light disabled')
+        });
+
+        $(".pages").bind('click', function(e){
+            e.preventDefault();
+            var value = this.text;
+            switch(value) {
+                case '>':
+                    value = parseInt($(".active span").text()) + 1;
+                    break;
+                case '<':
+                    value = parseInt($(".active span").text()) - 1;
+                    break;
+                case '<<':
+                    value = 1;
+                    break;
+                case '>>':
+                    value = @Model.Images.PageCount;
+                    break;
+                default:
+                    value = this.text;
+            }
+            if (value == '>' || value == '<') {
+            }
+            $("#Pnumber").val(parseInt(value));
+            $("#hidden").submit();
+        });
+    </script>
+}

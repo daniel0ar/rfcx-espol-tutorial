@@ -1,0 +1,56 @@
+* {box-sizing: border-box}
+body {font-family: "Lato", sans-serif;}
+
+/* This css contain styles for all the views that have charts*/
+
+.body-content {
+	width:auto;
+}
+
+/*
+    The div which contain the title of the chart 
+    and input elements to retrieve data
+*/
+div.container-fluid > div.card {
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+/*container of all charts*/
+.chartsContainer {
+    margin: 10px 50px;
+    margin-bottom:10%;
+}
+
+.titleHistoricalView{
+    text-align: center; 
+    color: #e4b836; 
+    font-weight: bold;
+}
+
+
+/*this class is critical for basic statistics values to be shown in a line*/
+.basicStatisticValue{
+    display : inline;
+    margin-right: 15px;
+}
+
+.iconBasicStatitic{
+    font-size: 13px;
+}
+
+.canvasJsChart{
+    margin-top : 20px;
+}
+
+label{
+    margin-right: 5px;
+    color: #757575;
+}
+
+/*to remove, up and down arrows of date input element*/
+input[type=date]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+}
+

@@ -1,0 +1,1 @@
+{"_id":{"$oid":"5ae25f26294d5d816753b674"},"id":1.0,"id_dispositivo":1.0,"fecha_llegada":"12/12/2017","fecha_grabacion":"10/10/2017","duracion":"00:02:00","formato":"wav","bit_rate":500.0,"etiquetas":{"tag1":{"inicio":"00:01:12","fin":"00:01:15","descripcion":"Ave1"}}}

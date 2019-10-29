@@ -1,0 +1,83 @@
+@model WebApplication.Models.User
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Index";
+}
+
+    <style>
+
+        h2 {
+            margin-left: 10px;
+        }
+
+        #div_login {
+            margin-top: 20px;
+            margin-bottom: 50px;
+            margin-left: 20px;
+        }
+
+        input {
+            margin: 10px;
+            padding: 4px;
+        }
+
+        .simple-login-container {
+            width: 300px;
+            max-width: 100%;
+            margin: 50px auto;
+        }
+
+        .simple-login-container h2 {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .simple-login-container .btn-login {
+            background-color: #007f42;
+            color: #fff;
+        }
+
+        img {
+            margin-bottom: 5px;
+        }
+
+        a {
+            color: #fff;
+        }
+    </style>
+<html>
+<body>
+    <div class="simple-login-container ">
+        <div class="brand">
+            <img src="/images/logo-color.png" width="300" />
+        </div>
+        <form asp-controller="Authentication" asp-action="authenticate" method="post" role="form">
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <input asp-for="Username" type="text" class="form-control" placeholder="Username">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <input type="password" asp-for="Password" placeholder="Enter your Password" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <button type="submit" class="btn btn-block btn-login">Ingresar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+</body>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</html>
+
+
+
+    

@@ -1,0 +1,55 @@
+{
+  "dispositivos": [
+    {
+      "dispositivoID": "3hj343j",
+      "nombreDispositivo": "Dispositivo 1",
+      "sensores":[
+        {
+          "nombre": "sensor1",
+          "muestras": [
+            {"tipo":"temperatura","funcion":"ambiente","valor":"24"},
+            {"tipo":"temperatura","funcion":"telefono","valor":"35"}
+          ]
+        },
+        {
+          "nombre": "sensor2",
+          "muestras": [
+            {"tipo":"humedad","funcion":"ambiente","valor":"30"}
+          ]
+        }
+      ]
+    },
+    {
+      "dispositivoID": "jdf9450",
+      "nombreDispositivo": "Dispositivo 2",
+      "sensores":[
+        {
+          "nombre": "sensor1",
+          "muestras": [
+            {"tipo":"temperatura","funcion":"ambiente","valor":"28"},
+            {"tipo":"temperatura","funcion":"telefono","valor":"40"}
+          ]
+        },
+        {
+          "nombre": "sensor2",
+          "muestras": [
+            {"tipo":"humedad","funcion":"ambiente","valor":"29"}
+          ]
+        }
+      ]
+    },
+    {
+      "dispositivoID": "jhf7398",
+      "nombreDispositivo": "Dispositivo 3",
+      "sensores":[
+        {
+          "nombre": "sensor1",
+          "muestras": [
+            {"tipo":"temperatura","funcion":"ambiente","valor":"34"},
+            {"tipo":"temperatura","funcion":"telefono","valor":"23"}
+          ]
+        }
+      ]
+    }
+  ] 
+}

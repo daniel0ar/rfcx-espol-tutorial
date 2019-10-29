@@ -1,0 +1,19 @@
+.check {
+    margin-right: 5px; 
+}
+
+.pagination-container {
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.download {
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#hidden {
+    padding: 0px 0px 15px 10px;
+    margin-right: 20px;
+}

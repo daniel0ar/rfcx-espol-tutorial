@@ -1,0 +1,158 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/WebApplication.csproj": {}
+  },
+  "projects": {
+    "/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/WebApplication.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/WebApplication.csproj",
+        "projectName": "WebApplication",
+        "projectPath": "/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/WebApplication.csproj",
+        "packagesPath": "/home/daniel/.nuget/packages/",
+        "outputPath": "/home/daniel/Repositorios/rfcx-espol-server/RfcxServer/WebApplication/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/home/daniel/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.0": {
+          "dependencies": {
+            "DotNetZip": {
+              "target": "Package",
+              "version": "[1.10.1, )"
+            },
+            "Microsoft.ApplicationInsights.AspNetCore": {
+              "target": "Package",
+              "version": "[2.5.1, )"
+            },
+            "Microsoft.AspNetCore.All": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.MongoDB": {
+              "target": "Package",
+              "version": "[1.0.2, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Core": {
+              "target": "Package",
+              "version": "[2.0.2, )"
+            },
+            "Microsoft.CodeAnalysis.CSharp.Workspaces": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            },
+            "Microsoft.CodeAnalysis.Common": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            },
+            "Microsoft.Extensions.FileProviders.Physical": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "Microsoft.Extensions.Primitives": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.0.4, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.7.2, )"
+            },
+            "Mono.Posix.NETStandard": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[11.0.2, )"
+            },
+            "Serilog.Extensions.Logging": {
+              "target": "Package",
+              "version": "[2.0.2, )"
+            },
+            "System.Collections": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Composition": {
+              "target": "Package",
+              "version": "[1.0.31, )"
+            },
+            "System.IO.FileSystem.AccessControl": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "System.Security.Permissions": {
+              "target": "Package",
+              "version": "[4.4.1, )"
+            },
+            "System.Text.Encoding.CodePages": {
+              "target": "Package",
+              "version": "[4.4.0, )"
+            },
+            "WindowsBase": {
+              "target": "Package",
+              "version": "[4.6.1055, )"
+            },
+            "X.PagedList": {
+              "target": "Package",
+              "version": "[7.5.0, )"
+            },
+            "X.PagedList.Mvc": {
+              "target": "Package",
+              "version": "[7.5.0, )"
+            },
+            "X.PagedList.Mvc.Core": {
+              "target": "Package",
+              "version": "[7.5.0, )"
+            },
+            "microsoft.aspnetcore.staticfiles": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "nonfactors.grid.mvc6": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

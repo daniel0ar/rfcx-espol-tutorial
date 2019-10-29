@@ -1,0 +1,842 @@
+
+
+.navbar {
+  margin-bottom: 0px !important;
+}
+
+.navbar-default{
+	background-color: #007f42 !important;
+  border: none !important;
+  border-radius: 0px !important;
+	padding: 0px !important;
+}
+
+/* BEGIN: CSS ALARM SUBMENU. */
+
+#submenu {
+  float:left;
+  z-index: 1;
+}
+
+#submenu a {
+  background-color: #007f42 !important;
+  color:#fff;
+  text-decoration:none;
+  display:block;
+  padding-left: 5%;
+}
+
+#submenu ul {
+  display:none;
+  position:absolute;
+  min-width:140px;
+  background-color: #007f42 !important;
+}
+
+#submenu:hover > ul {
+  display:block;
+}
+
+#submenu ul li {
+  position:relative;
+  margin-bottom: 10%;
+}
+
+/* END: CSS ALARM SUBMENU. */
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.navbar-default .navbar-text {
+  color: #fff !important;
+}
+
+.mu-main-navbar .mu-main-nav li a {
+  color: #fff !important;
+}
+
+.mu-main-nav li a:hover {
+  color: #e4b836 !important;
+}
+
+html {
+  min-height: 100%;
+  position: relative;
+}
+body {
+  margin: 0;
+  margin-bottom: 40px;
+}
+
+footer {
+  background-color: #ddd;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+}
+
+footer p {
+  color: black;
+  font-size: 12px;
+  text-align: center;
+  padding-top: 8px;
+}
+
+#home-pag i:hover {
+  color: #e4b836 !important;
+}
+
+#home-pag i {
+  margin: 7px !important;
+}
+
+#logo {
+  margin: 5px 0px 5px 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #333333;
+}
+
+a:hover,
+a:focus {
+  outline: none;
+  text-decoration: none;
+}
+
+/* Font title */
+.mu-title h2 {
+    font-weight: bold;
+    text-align: left;  
+    color: #007f42;
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+/* Table's design */
+#vertical-table {
+    width: 40%;
+    border-bottom: 2px solid #000000;
+    border-top: 2px solid #000000;
+    background-color: #ffffff;
+    margin: 0% 0.6% 0% 0.6%;
+}
+
+#horizontal-table {
+  width: 99%;
+  border-bottom: 2px solid #000000;
+  border-top: 2px solid #000000;
+  background-color: #ffffff;
+  margin: 0% 0.6% 0% 0.6%;
+}
+
+#device {
+  font-size: 12.9px;
+  margin-top: 4px;
+  width: 73%;
+}
+
+/* Button's design */
+.out {
+  color: #fff;
+  background: #007f42;
+  border-radius: 6px;
+  padding: 7px 10px;
+  border: none;
+}
+.out:hover {
+  color: #e4b836;
+}
+
+#selectAll {
+  font-size: 12px;
+}
+
+#plus-icon {
+  font-size: 50px;
+  color: #6d6969;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/*==================
+ NAVBAR SECTION
+====================*/
+.mu-main-navbar {  
+  border: none;
+  padding: 20px 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.mu-main-navbar .mu-main-nav .dropdown-menu {
+  background-color: #ffffff;
+  border-radius: 0;
+}
+
+.mu-main-navbar .mu-main-nav .dropdown-menu li a {
+  padding: 10px 20px;
+}
+
+.mu-main-navbar .navbar-header .navbar-brand {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 35px;  
+  padding: 0;
+  margin-top: 16px;
+  height: 34px;
+  width: 180px;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.mu-main-navbar .navbar-header .navbar-brand img {
+  margin-top: -10px;
+}
+
+
+.mu-main-navbar .navbar-header .navbar-brand-small {
+  height: 20px;
+  margin-top: 16px;
+  width: 105px;
+}
+
+.mu-main-navbar .navbar-header .navbar-brand-small span {
+  margin-top: -4px;
+}
+
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+  background-color: transparent;
+}
+
+/*scrol to top*/
+
+.scrollToTop {
+  bottom: 60px;
+  color: #ffffff;
+  display: none;
+  font-size: 30px;
+  line-height: 50px;
+  position: fixed;
+  right: 20px;
+  text-align: center;
+  text-decoration: none;
+  width: 55px;
+  z-index: 999;
+  -webkit-transition: all 0.5s ease 0s;
+  -moz-transition: all 0.5s ease 0s;
+  -ms-transition: all 0.5s ease 0s;
+  -o-transition: all 0.5s ease 0s;
+  transition: all 0.5s ease 0s;
+  height: 55px;
+  border-radius: 50%;
+}
+
+.scrollToTop:hover,
+.scrollToTop:focus {
+  color: #ffffff;
+}
+
+#vertical-table {
+  width: 40%;
+  border-bottom: 2px solid #000000;
+  border-top: 2px solid #000000;
+  background-color: #ffffff;
+  margin: 0% 0.6% 0% 0.6%;
+}
+
+#hide{
+  display: none;
+}
+
+
+#horizontal-table {
+  width: 98%;
+  border-bottom: 2px solid #000000;
+  border-top: 2px solid #000000;
+  background-color: #ffffff;
+  margin: 0% 0.6% 0% 0.6%;
+}
+
+#device {
+  font-size: 12.9px;
+  margin-top: 4px;
+  width: 73%;
+}
+
+.mu-about-us-area{
+  margin-left: 15px;
+}
+
+#selectAll {
+  font-size: 12px;
+}
+
+/*==================
+	SLIDER SECTION
+====================*/
+
+#mu-slider {
+  display: inline;
+  position: relative;
+  background-image: url("/wwwroot/images/slider/plants.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-attachment: fixed;
+}
+
+.mu-slider-area {
+  display: inline;
+  margin: 0% 7% 0% 7%; 
+}
+
+.mu-top-slider {
+  display: inline;
+}
+
+.mu-top-slider-single {
+  display: inline;
+  position: relative;
+}
+
+.mu-top-slider .mu-top-slider-single:after {
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 9;
+}
+
+.mu-top-slider .mu-top-slider-single img {
+  width: 100%;
+}
+
+.mu-top-slider .mu-top-slider-single .mu-top-slider-content {
+  position: absolute;
+  left: 15%;
+  top: 30%;
+  right: 15%;
+  text-align: center;
+  z-index: 99;
+}
+
+.mu-top-slider .mu-top-slider-single .mu-top-slider-content .mu-slider-small-title {
+  font-size: 100px;
+  font-weight: 400;
+  line-height: 40px;
+}
+
+.mu-top-slider .mu-top-slider-single .mu-top-slider-content .mu-slider-title {
+  /*  color: #fff;  */
+  font-size: 70px;
+  line-height: 40px;
+}
+
+.mu-top-slider .mu-top-slider-single .mu-top-slider-content p {
+  /* color: #fff; */
+  font-size: 20px;
+  margin-bottom: 30px;
+  margin-top: 10px;
+  padding: 0 30px;
+}
+
+.mu-top-slider .slick-prev::before {
+  content: "\f177";
+}
+
+.mu-top-slider .slick-next::before {
+  content: "\f178";
+}
+
+.mu-top-slider .slick-prev,
+.mu-top-slider .slick-next {
+  background-color: transparent;
+  border: 2px solid #888;
+  height: 60px;
+  top: 50%;
+  width: 70px;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.mu-top-slider .slick-prev::before,
+.mu-top-slider .slick-next::before {
+  color: #888;
+}
+
+.mu-top-slider .slick-prev:hover, 
+.mu-top-slider .slick-prev:focus,
+.mu-top-slider .slick-next:hover,
+.mu-top-slider .slick-next:focus {
+  color: #fff;  
+}
+
+.mu-top-slider .slick-prev:hover::before, 
+.mu-top-slider .slick-prev:focus::before,
+.mu-top-slider .slick-next:hover::before,
+.mu-top-slider .slick-next:focus::before {
+  color: #fff;  
+}
+
+.mu-top-slider .slick-prev {
+  left: 20px;
+}
+
+.mu-top-slider .slick-next {
+  right: 20px;
+}
+
+.mu-top-slider .slick-dots {
+  bottom: 20px;
+}
+
+.mu-top-slider .slick-dots li button {
+  border-radius: 50%;
+  border: 2px solid #65D352;
+}
+
+.mu-top-slider .slick-dots li button::before {
+  color: transparent;
+  background: transparent;
+  border-radius: 50%;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.mu-top-slider .slick-dots li.slick-active button::before {
+  color: transparent;
+  background-color: #77B379;
+  border-radius: 50%;
+  opacity: 1;
+}
+
+
+/*==================
+	ABOUT US SECTION
+====================*/
+
+#mu-about-us {
+  display: inline;
+  padding: 100px 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-attachment: fixed;
+}
+
+.mu-about-us-right {
+  display: inline;
+  padding-top: 30px;
+  padding-left: 15px;
+}
+
+.mu-about-us-right ul {
+  margin-bottom: 20px;
+  padding-left: 25px;
+}
+
+.mu-about-us-right ul li {
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+
+.mu-about-us-right ul li:before {
+  content: "\f0da";
+  margin-right: 10px;
+}
+
+.mu-about-us-left {
+  display: inline;
+  padding-top: 30px;
+  padding-right: 15px;
+}
+
+#principal {
+  padding: 15px;
+  text-align: center;
+}
+
+.body-wrapper {
+  display: inline-block;
+}
+
+.body-wrapper * {
+  text-align: left;
+}
+
+.body-wrapper h2{
+  text-align: center;
+}
+
+
+/*==================
+ RESPONSIVE DESIGN
+====================*/
+
+@media (max-width: 1199px) {
+
+  .mu-main-navbar .mu-main-nav li a {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .mu-top-slider .mu-top-slider-single .mu-top-slider-content {
+    position: absolute;
+    left: 5%;
+    top: 15%;
+    right: 5%;
+  }
+
+  .mu-top-slider .mu-top-slider-single .mu-top-slider-content .mu-slider-small-title {
+    font-size: 80px;
+  }
+
+  .mu-top-slider .mu-top-slider-single .mu-top-slider-content .mu-slider-title {
+    font-size: 55px;
+    line-height: 70px;
+  }
+
+  .mu-reservation-content {
+    padding: 0;
+  }
+
+  .mu-testimonial-slider li .mu-testimonial-single {
+    padding: 0 50px;
+  }
+
+  .mu-chef-nav .slick-list li .mu-single-chef .mu-single-chef-social {
+    padding: 23px 5px;
+  }
+
+  .mu-single-gallery .mu-single-gallery-item .mu-single-gallery-info {
+  padding-top: 26%;
+  }
+
+  
+}
+
+
+@media (max-width: 991px) {
+
+
+  .mu-main-navbar .mu-main-nav li a {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 14px;
+  }
+
+  .mu-top-slider-content .mu-reservation-btn {
+    display: none;
+  }
+
+  .mu-about-us-left,
+  .mu-reservation-form {
+    text-align: center;
+  }
+  
+  .mu-reservation-right {
+    margin-top: 60px;
+  }
+  
+  #mu-contact .mu-contact-area .mu-contact-content .mu-contact-right {
+    margin-top: 50px;
+    padding: 0;
+  }
+
+  #mu-gallery .mu-gallery-area .mu-gallery-content .mu-gallery-body .mu-single-gallery .mu-single-gallery-item .mu-single-gallery-info {
+    padding-top: 22%;
+  }
+
+  #mu-client-testimonial .mu-client-testimonial-area .mu-testimonial-content .mu-testimonial-slider li .mu-testimonial-single {
+    padding: 0 60px;
+  }
+
+  #mu-client-testimonial .mu-client-testimonial-area .mu-testimonial-content .mu-testimonial-slider li .mu-testimonial-single .mu-testimonial-info p::before {
+    top: 40%;
+  }
+
+
+}
+
+
+@media (max-width: 767px) {
+
+  #mu-header {
+    padding: 0 15px;
+  }
+
+  .navbar-default .navbar-toggle {
+    border-radius: 0px;
+  }
+
+  .navbar-default .navbar-toggle:hover, 
+  .navbar-default .navbar-toggle:focus {
+    background-color: #fff;
+  }
+
+  .mu-main-navbar .mu-main-nav {
+    background-color: #007f42;
+    text-align: center;
+  }
+
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, 
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    background-color: #fff;
+  }
+
+  #mu-counter .mu-counter-overlay .mu-counter-area .mu-counter-nav li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-right: none;
+  }
+   
+}
+
+
+@media (max-width: 640px) {
+  
+  .navbar-default .navbar-toggle:hover, 
+  .navbar-default .navbar-toggle:focus {
+    background-color: #fff;
+  }
+
+  #mu-slider .mu-slider-area .mu-top-slider .mu-top-slider-single .mu-top-slider-content .mu-slider-title {
+    font-size: 50px;
+    line-height: 75px;
+  }
+
+ .mu-top-slider .mu-top-slider-single .mu-top-slider-content {
+    top: 18%;
+  }
+
+  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-restaurant-menu li a {
+    font-size: 16px;
+    margin: 0 5px;
+  }
+
+  #mu-gallery .mu-gallery-area .mu-gallery-content .mu-gallery-body .mu-single-gallery .mu-single-gallery-item .mu-single-gallery-info {
+    padding-top: 18%;
+  }
+
+  #mu-client-testimonial .mu-client-testimonial-area .mu-testimonial-content .mu-testimonial-slider li .mu-testimonial-single {
+    padding: 0;
+  }
+
+  .mu-testimonial-slider li .mu-testimonial-single .mu-testimonial-info p {
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  #mu-chef .mu-chef-area .mu-chef-content .mu-chef-nav .slick-list li .mu-single-chef .mu-single-chef-social a {
+    margin: 0 3px;
+    padding: 3px 0;
+    width: 30px;
+  }
+
+  .mu-top-slider .slick-dots {
+    display: none !important;
+  } 
+
+  .mu-top-slider .mu-top-slider-single .mu-top-slider-content .mu-slider-small-title {
+    font-size: 45px;
+    line-height: 35px;
+  }
+
+  .mu-top-slider .mu-top-slider-single .mu-top-slider-content p {
+    font-size: 14px;
+    margin-bottom: 0;
+    margin-top: 0px;
+    padding: 0 5px;
+  }
+
+  #mu-slider .mu-slider-area .mu-top-slider .mu-top-slider-single .mu-top-slider-content .mu-slider-title {
+    font-size: 30px;
+    line-height: 50px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .mu-top-slider .mu-top-slider-single .mu-top-slider-content {
+   top: 20%;
+  }
+
+  .mu-top-slider .mu-top-slider-single .mu-top-slider-content p {
+    display: none;
+  }
+ 
+  .mu-reservation-content p {
+    padding: 0;
+  }
+
+  #mu-client-testimonial .mu-client-testimonial-area .mu-testimonial-content .mu-testimonial-slider li .mu-testimonial-single {
+    padding: 0;
+  }
+
+  #mu-subscription .mu-subscription-area .mu-subscription-form input[type="text"] {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  #mu-subscription .mu-subscription-area {
+    padding: 0;
+    text-align: center;
+  }
+
+  #mu-subscription .mu-subscription-area .mu-subscription-form .mu-readmore-btn {
+    width: auto;
+  }
+
+  #mu-gallery .mu-gallery-area .mu-gallery-content .mu-gallery-body .mu-single-gallery {
+    width: 100%;
+  }
+
+   #mu-gallery .mu-gallery-area .mu-gallery-content .mu-gallery-body .mu-single-gallery .mu-single-gallery-item .mu-single-gallery-info {
+    padding-top: 30%;
+  }
+
+  #mu-map {
+    height: 350px;
+  }
+
+  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-restaurant-menu li {
+    margin-bottom: 10px;
+  }
+  
+  
+}
+
+@media (max-width: 360px) {
+
+  #mu-slider .mu-slider-area .mu-top-slider .mu-top-slider-single .mu-top-slider-content .mu-slider-title {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .mu-top-slider .mu-top-slider-single .mu-top-slider-content .mu-slider-small-title {
+    font-size: 30px;
+    line-height: 25px;
+  }
+
+  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-restaurant-menu li {
+    margin-bottom: 12px;
+  }
+
+  #mu-about-us {
+    padding: 100px 0 50px;
+  }
+
+  #mu-restaurant-menu {
+    padding-bottom: 0px;
+  }
+
+  #mu-reservation .mu-reservation-area .mu-reservation-content {
+    padding: 0;
+  }
+
+  .mu-opening-hour h2 {
+    font-size: 42px;
+    padding-bottom: 10px;
+  }
+  
+  #mu-client-testimonial .mu-client-testimonial-area .mu-testimonial-content .mu-testimonial-slider li .mu-testimonial-single .mu-testimonial-info p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  
+  #mu-contact .mu-contact-area .mu-contact-content .mu-contact-right {
+    text-align: center;
+  }
+
+  #mu-contact .mu-contact-area .mu-contact-content .mu-contact-right .mu-contact-widget address {
+    text-align: left;
+  }
+
+  #mu-contact {
+    padding: 100px 0 50px;
+  }
+
+  #mu-gallery .mu-gallery-area .mu-gallery-content .mu-gallery-body .mu-single-gallery .mu-single-gallery-item .mu-single-gallery-info {
+    padding-top: 27%;
+  }
+
+  #mu-footer .mu-footer-area .mu-footer-social a {
+    font-size: 18px;
+  }
+
+  .mu-menu-item-nav li {
+    text-align: center;
+  }
+
+  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-left {
+    height: auto;
+    width: 100%;
+    margin-right: 0;
+    float: left;
+  }
+
+  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-left a{
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-left a img {
+    display: inline-block;
+  }
+
+  #mu-map {
+    height: 250px;
+  }
+
+  .mu-contact-form .mu-send-btn {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 320px) {
+
+  #mu-gallery .mu-gallery-area .mu-gallery-content .mu-gallery-body .mu-single-gallery .mu-single-gallery-item .mu-single-gallery-info {
+    padding-top: 25.5%;
+  }
+
+  
+}
+

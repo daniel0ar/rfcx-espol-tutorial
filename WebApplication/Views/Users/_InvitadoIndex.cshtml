@@ -1,0 +1,58 @@
+﻿@model WebApplication.Models.User
+
+<div id="principal">
+    <h2>Usuarios</h2>
+    <div id="div_tabla_usuarios">
+        <table id="tabla_usuarios" class="cell-border display compact">
+            <thead>
+                <tr>
+                    <th class="userId">User Id</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var par in @ViewBag.UsersInDB)
+                {
+                    <tr>
+                        <td class="userId">@par.UserId</td>
+                        <td>@par.Username</td>
+                        <td>@par.Name</td>
+                        <td>@par.Email</td>
+                        <td>@par.Role</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script src="~/js/bootstrap.js"></script>
+<script src="~/js/bootstrap-dialog.min.js" type="text/javascript"></script>
+<script src="~/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="~/js/select2.min.js" type="text/javascript"></script>
+<script src="~/js/es.js" type="text/javascript"></script>
+<script>
+
+    $(document).ready( function () {
+            $('#tabla_usuarios').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "columns": [
+                    {
+                        "width": "0%",
+                        "searchable": false
+                    },
+                    { "width": "25%" },
+                    { "width": "25%" },
+                    { "width": "25%" },
+                    { "width": "25%" }
+                ]
+            });
+        } );
+</script>

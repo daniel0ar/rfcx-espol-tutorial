@@ -1,0 +1,258 @@
+@{
+    ViewBag.Title = "Crear Alerta";
+}
+@section Style {
+    <style>
+        #titulo {
+            text-align: center;
+        }
+
+        #boton_alerta {
+            text-align: left;
+            margin-top: 20px;
+            margin-bottom: 65px;
+        }
+
+        #subtitulo {
+            margin-bottom: 5px;
+        }
+        #formulario {
+            margin-left: 0;
+            overflow: hidden;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        #mensaje {
+            color: gray;
+        }
+        
+        .modal-footer {
+            text-align: center !important;
+        }
+
+        .condition-container {
+            margin: 10px;
+            padding: 5px;
+        }
+    </style>
+}
+<div class="container">
+    <div id="formulario" class="row">
+        <form id="form_crear_alerta" class="form-row" method="post" enctype="multipart/form-data" action="/api/alert/">
+            <div id="titulo" class="form-group col-lg-12 col-md-12">
+                <h2>Creación de alerta</h2>
+            </div>
+            <div class="form-group col-lg-12 col-md-12">
+                <label>Nombre: </label>
+                <input id="nombre_alerta" class="form-control" type="text" name="nombre_alerta" required>
+            </div>
+            <div class="form-group col-md-9">
+                <label>Nivel: </label>
+                <select name="tipo_alerta" class="form-control" required="">
+                    <option value="" hidden="">Escoja una opción</option>
+                        <option value="3">3 - Incidente Crítico</option>
+                        <option value="2">2 - Emergencia Situacional</option>
+                        <option value="1">1 - Crisis</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Frecuencia de notificación: </label>
+                <div class="form-row">
+                <input id="frecuencia_alerta" class="form-control col-3" type="text" name="frecuencia_alerta" required>
+                <span class="col-9">minutos</span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <a id="info-niveles" class="text-muted" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Mas información sobre los niveles</a>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <ul>
+                            <li><p class="text-info">3: A Level Three emergency is a minor emergency or critical incident that has the potential to require more resources than the responding department has available</p></li>
+                            <li><p class="text-warning">2: A Level Two emergency is one that requires a major response and the significant commitment of resources from several University departments or units, but will still be within the capabilities of the University to control</p></li>                        
+                            <li><p class="text-danger">1: A Level One emergency is a major emergency, major crisis, or disaster that requires an extensive response and commitment of resources from many departments/units and usually requires outside assistance</p></li>
+                        </ul>
+                        <a class="tex-muted" href="https://www.gallaudet.edu/public-safety/emergency-preparedness-guide/definitions-of-types-and-levels-of-emergencies">Fuente ↪</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label>Correos a Notificar: </label>
+                <input id="correos_notificacion" class="form-control" type="text" name="correos_notificacion" required>
+            </div>
+            <div class="col-md-12">
+                <p id="mensaje">Ingrese cada correo separado por ;</p>
+            </div>
+            <div class="col-md-12">
+                <label>Mensaje: </label>
+                <textarea id="mensaje_alerta" class="form-control" type="text" name="mensaje_alerta" rows="3" required></textarea>
+            </div>
+            
+            <div id="subtitulo" class="form-group col-md-12">
+                <h4>Notificar cuando: </h4>
+            </div>
+            <input id="conditions_number" hidden="" name="conditions_number"></input>
+            <div id="conditions" class=" form-group row">
+            </div>
+            <div class="col-lg-12">
+                <label> </label>
+                <a class="btn btn-primary" onclick="addCondition()"><i class="fa fa-plus-circle"></i></a>
+            </div>
+
+            <div id="boton_alerta" class="form-group col-md-12">
+                <button class="btn btn-primary" type="submit">Crear Alerta</button>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        var i = 0;
+
+
+        $(document).ready(function(){
+            addCondition();
+        });
+
+
+        function addStations(){
+            $.ajax({
+                url:"/api/Station/list",
+                dataType:'json',
+                async: false,
+                success: function(response) {
+                    $.each(response, function(idx, station) {
+                        let option = $("<option></option>");
+                        option.text(station.Name);
+                        option.attr("id",station.Id)
+                        option.attr("value",station.Id)
+                        $("#estacion_alerta"+i).append(option);
+                    });
+                }
+            });
+        }
+
+
+        function addOnChange() {
+           $("#estacion_alerta"+i).change(function(){
+                let id = $(this).val();
+                $.ajax({
+                    url:"/api/Station/"+id+"/Sensor",
+                    dataType:'json',
+                    async: false,
+                    success: function(response) {
+                        $("#sensor_alerta"+i).empty();
+                        $.each(response, function(idx, sensor) {
+                            let option = $("<option></option>");
+                            let name = sensor.Type + " - " + sensor.Location;
+                            option.text(name);
+                            option.attr("value",sensor.Id);
+                            $("#sensor_alerta"+i).append(option);
+                        });
+                    }
+                });
+            });
+        }
+        
+
+        function addCondition(){
+            i++;
+            $('#conditions_number').attr('value',i);
+            let divContainer = $('<div></div>');
+            divContainer.attr('class','condition-container form-row align-items-center');
+            divContainer.attr('id','condition-container_'+i)
+
+            let selectStation = $('<select></select>');
+            addAttributes(selectStation, 'estacion');
+            appendDefaultOption(selectStation);
+            divContainer.append(buildField("Estación", selectStation));
+
+            let selectSensor = $('<select></select>');
+            addAttributes(selectSensor, 'sensor');
+            appendDefaultOption(selectSensor);
+            divContainer.append(buildField("Sensor", selectSensor));
+
+            let nodata = $('<option></option>');
+            nodata.attr('value','NO DATA');
+            nodata.text('no recibe datos');
+            nodata.attr('onclick','changeFreqLabel('+i+')')
+            let mayorque = $('<option></option>');
+            mayorque.attr('value', 'MAYOR QUE');
+            mayorque.text("mayor que");
+            let menorque = $('<option></option>');
+            menorque.attr('value','MENOR QUE');
+            menorque.text("menor que");
+            let igualque = $('<option></option>');
+            igualque.attr('value','IGUAL QUE');
+            igualque.text("igual que");
+            let selectCondition = $('<select></select>');
+            addAttributes(selectCondition, 'condicion');
+            appendDefaultOption(selectCondition);
+            selectCondition.append(nodata);
+            selectCondition.append(mayorque);
+            selectCondition.append(menorque);
+            selectCondition.append(igualque);
+            divContainer.append(buildField("Condición",selectCondition));
+
+            let inputValue = $('<input></input>');
+            addAttributes(inputValue, 'threshold');
+            inputValue.attr('type','text');
+            divContainer.append(buildField("Valor", inputValue, i));
+
+            let deleteButton = $('<a></a>').addClass('btn btn-danger');
+            deleteButton.attr('onclick','deleteConditionContainer('+i+')');
+            let icon = $('<i></i>').addClass('fa fa-remove');
+            deleteButton.append(icon);
+            divContainer.append(deleteButton);
+
+            $("#conditions").append(divContainer);
+
+            addStations();
+            addOnChange();
+        }
+
+        function buildField(nameFieldString, inputField, i=""){
+            let divField = $('<div></div>').addClass('col-auto');
+            let divGroup = $('<div></div>').addClass('input-group mb-2');
+            let divPrepend = $('<div></div>').addClass('input-group-prepend');
+            let divText = $('<div></div>').addClass('input-group-text');
+            if (nameFieldString == "Valor"){
+                divText.attr('id','valor_div_'+i);
+                divField.addClass('col-sm-2');
+            }
+            divText.text(nameFieldString);
+            divPrepend.append(divText);
+            divGroup.append(divPrepend);
+
+            divGroup.append(inputField);
+            divField.append(divGroup);
+            return divField;
+        }
+
+        function appendDefaultOption(select){
+            let defaultOption = $('<option></option>');
+            defaultOption.attr('hidden','""');
+            defaultOption.attr('value','""');
+            defaultOption.text('Escoja una opción');
+            select.append(defaultOption);
+        }
+
+        function addAttributes(input, inputname){
+            input.attr('class', 'form-control');
+            input.attr('name', inputname+'_alerta'+i);
+            input.attr('id', inputname+'_alerta'+i);
+        }
+
+        function changeFreqLabel(i){
+            $("#valor_div_"+i).text('Frecuencia');
+        }
+
+        function deleteConditionContainer(idx){
+            i--;
+            $('#condition-container_'+idx).remove();
+        }
+
+    </script>
+}

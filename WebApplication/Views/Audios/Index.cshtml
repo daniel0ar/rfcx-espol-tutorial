@@ -1,0 +1,47 @@
+@model AudioViewModel
+@{
+  ViewBag.Title = "Audios";
+}
+
+<div id="principal">
+    <div class="body-wrapper container">
+        <h2>Descarga de Audios</h2>
+        <br>
+        <form asp-controller="Audios" asp-action="List" method="post" role="form">
+            <div class="form-row">
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend"> 
+                            <div class="input-group-text">Estación</div>
+                        </div>
+                        @Html.DropDownListFor(m => m.StationId,
+                                                new SelectList(Model.Stations.Select(x => new { Value = x.Id, Text = x.Name}), "Value", "Text"),
+                                                "Estación", htmlAttributes: new { @class = "form-control" })
+                        <span asp-validation-for="StationId" class="text-danger"></span>                       
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend"> 
+                            <div class="input-group-text">Fecha Inicial</div>
+                        </div>
+                        <input asp-for="Start" class="form-control" type="date">
+                        <span asp-validation-for="Start" class="text-danger"></span>                       
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend"> 
+                            <div class="input-group-text">Fecha Final</div>
+                        </div>
+                        <input asp-for="End" class="form-control" type="date">
+                        <span asp-validation-for="End" class="text-danger"></span>                     
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button id="search" type="submit" class="btn btn-primary" >Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

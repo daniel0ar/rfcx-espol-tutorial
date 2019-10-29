@@ -1,0 +1,101 @@
+﻿@model IndexModel
+@{
+    ViewData["Title"] = "Bosque Protector";
+}
+@section Style{
+  <link href='/css/stations.css' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Prata' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Tangerine' rel='stylesheet' type='text/css'>     
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+}
+
+<div class="row equal">
+ 	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 plus-station" style="margin-bottom: 15px">
+		<div class="new_station_button">
+			<a data-toggle="modal" href="#station_modal"><i class="material-icons" id="plus-icon">
+				add_circle_outline
+			</i></a>
+		</div>
+	</div>
+</div>
+
+<!-- Modal form-->
+<div class="modal fade" id="station_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" style="margin-top: 2px" onclick="closeModal(1)">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="modal_label">Nueva Estación</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+				<form id="form">
+					<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+						<label class="control-label">Nombre:</label>
+						<input id="name" name="name" class="form-control" type="text"/>
+					</div>
+					<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+						<label class="control-label">Estación Juego:</label>
+						<input id="game_station" name="game_station" class="form-control" type="number"/>
+					</div>
+					<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+						<label class="control-label">API Key:</label>
+						<input id="api_key" name="api_key" class="form-control" type="text"/>
+					</div>
+					<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<label class="control-label">Latitud:</label>
+						<input id="latitude" name="latitude" class="form-control" type="text"/>
+					</div>
+					<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<label class="control-label">Longitud:</label>
+						<input id="longitude" name="longitude" class="form-control" type="text"/>
+					</div>
+					<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<label class="control-label">Versión de Android:</label>
+						<input id="android_version" name="android_version" class="form-control" type="text"/>
+					</div>
+					<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+						<label class="control-label">Versión de Servicios:</label>
+						<input id="services_version" name="services_version" class="form-control" type="text"/>
+					</div>
+					<input id="db_id" type="hidden"/>
+				</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="save" class="btn btn-primary" onclick="saveStation()">Guardar</button>
+				<button id="cancel" class="btn btn-default" onclick="closeModal(1)">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal alert-->
+<div class="modal fade" id="alert_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header alert-danger">
+				<button type="button" class="close" style="margin-top: 1px" onclick="closeModal(2)">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="modal_alert_label">ADVERTENCIA</h4>
+			</div>
+			<div class="modal-body">
+				<p>Se borrará la estación y todos sus sensores, así como todos los datos relacionados a ellos.
+					Esta acción no puede revertirse. ¿Desea continuar?
+				</p>
+				<input id="st_id" type="hidden"/>
+			</div>
+			<div class="modal-footer">
+				<button id="accept" class="btn btn-danger" onclick="deleteStation()">Aceptar</button>
+				<button id="cancel" class="btn btn-default" onclick="closeModal(2)">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section ScriptsIndex {
+  <script src="~/js/stations.js"></script>
+}

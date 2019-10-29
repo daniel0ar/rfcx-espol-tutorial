@@ -1,0 +1,54 @@
+@model WebApplication.Models.User
+
+@section Style {
+    <style>
+
+        #div_tabla_usuarios {
+            margin-top: 20px;
+            margin-bottom: 50px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .userId {
+            display: none;
+        }
+
+        h2 {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        #div_boton_nuevo {
+            margin: 20px 0;
+        }
+
+        h4#modal_alert_label {
+            color: white;
+        }
+
+        .modal-header.alert-danger button.close {
+            color: white;
+            opacity: 1;
+        }
+
+        .modal-header.alert-danger {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            background-color: #d9534f;
+        }
+
+        .modal-footer {
+            text-align: center !important;
+        }
+    </style>
+}
+
+@if (ViewBag.Role == "Admin")
+{
+    @Html.Partial("_AdminIndex");
+}
+else
+{
+    @Html.Partial("_InvitadoIndex");
+}

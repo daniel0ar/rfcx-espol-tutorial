@@ -1,0 +1,267 @@
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Common;
+@model IncidentViewModel
+@{
+    ViewBag.Title = "Incident";
+}
+
+@section Style {
+    <style>
+        h2 {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        #div_tabla_incidentes {
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+
+        h4#modal_incident_label {
+            color: white;
+        }
+        .modal-header.alert-danger button.close{
+            color: white;
+            opacity: 1;
+        }
+        .modal-header.alert-danger {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            background-color: #d9534f;
+        }
+        .modal-footer {
+            text-align: center !important;
+        }
+
+        button {
+            margin: 5px !important;
+        }
+
+        /* The switch - the box around the slider */
+        .switch {
+        position: relative;
+        display: inline-block;
+        width: 54px;
+        height: 30px;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        }
+
+        /* The slider */
+        .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        .slider:before {
+        position: absolute;
+        content: "";
+        height: 23px;
+        width: 23px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        input:checked + .slider {
+        background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+        -webkit-transform: translateX(23px);
+        -ms-transform: translateX(23px);
+        transform: translateX(23px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+        border-radius: 34px;
+        }
+
+        .slider.round:before {
+        border-radius: 50%;
+        }
+    </style>
+}
+
+<div id="principal">
+    <div class="body-wrapper container">
+        <h2>Incidentes</h2>
+
+        <!-- Pop ups with return messages-->
+        @if(((int) TempData["editResult"]) == 1) {
+            <div id="alerta" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                El incidente ha sido editada correctamente
+            </div>
+        } else if(((int) TempData["editResult"]) == -1) {
+            <div id="alerta" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                Hubo un problema al editar el incidente. Por favor, vuelva a intentarlo.
+            </div>
+        }
+        <form asp-controller="Incident" asp-action="List" method="post" role="form">
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <label class="sr-only" for="incident_start">Nombre Alerta</label>
+                    <input asp-for="Start" type="date" class="form-control mb-2" id="incident_start"></input>
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="incident_end">Nombre Alerta</label>
+                    <input asp-for="Start" type="date" class="form-control mb-2" id="incident_end"></input>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary mb-2" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
+
+        <div id="div_tabla_incidentes">
+            <table id="tabla_incidentes" class="table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Alerta</th>
+                        <th>Condicion</th>
+                        <th>Notificar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var incident in Model.Incidents)
+                    {
+                        <tr>
+                            <td>@incident.IncidentTime</td>
+                            <td>@incident.RaisedAlertName</td>
+                            <td>@incident.RaisedCondition</td>
+                            <td style="text-align: center;">
+                                <label class="switch" id='switch_@incident.IncidentId'>
+                                    @if (incident.Status) {<input id="checkbox-status_@incident.IncidentId" type="checkbox" onclick="mostrarAdvertenciaStatus('@incident.IncidentId','@incident.Status');" checked>}
+                                    else {<input id="checkbox-status_@incident.IncidentId" type="checkbox" onclick="editarStatus('@incident.IncidentId','@incident.Status');"> }
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+
+            <form id="hidden" asp-controller="Incident" asp-action="Index" method="get" role="form">
+                @Html.HiddenFor(m => m.Pnumber)
+                @if (Model.Incidents != null)
+                {
+                    @Html.PagedListPager(Model.Incidents, page => Url.Action("Index", new { page = page }),
+                        new PagedListRenderOptions {
+                            PageClasses = new string[] { "pages" },
+                        });
+                }
+            </form>
+
+        </div>
+
+
+        <div class="modal fade" id="incident_modal_status" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header alert-danger">
+                        <button type="button" class="close" style="margin-top: 1px" onclick="cerrarModalStatus();">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modal_incident_label">ADVERTENCIA</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>El incidente dejará de notificarse. ¿Desea continuar?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="acceptStatus" class="btn btn-danger" onclick="">Aceptar</button>
+                        <button id="cancelStatus" class="btn btn-default" onclick="cerrarModalStatus();">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+
+        function mostrarAdvertenciaStatus(id,status) {
+            status = status.toLowerCase();
+            $("#acceptStatus").attr("onclick", "editarStatus('" + id + "','" + status + "');");
+            $("#incident_modal_status").modal("show");
+            $("#incident_modal_status").attr('incidentid',id)
+        }
+
+        function cerrarModalStatus() {
+            $("#incident_modal_status").modal("hide");
+            let incidentid = $("#incident_modal_status").attr('incidentid')
+            console.log('#checkbox-status_'+incidentid)
+            $('#checkbox-status_'+incidentid).prop("checked",true);
+        }
+
+        function editarStatus(id, status) {
+            status = (status == 'true')
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                    url: "/api/incident/" + id + "/status",
+                    type: 'PATCH',
+                    async: true,
+                    data: JSON.stringify(!status),
+                    success: function() {
+                        window.location.href = '@Url.Action("Index","Incident")';
+                    }
+            });
+        }
+
+        $(".pages").bind('click', function(e){
+            e.preventDefault();
+            var value = this.text;
+            switch(value) {
+                case '>':
+                    value = parseInt($(".active span").text()) + 1;
+                    break;
+                case '<':
+                    value = parseInt($(".active span").text()) - 1;
+                    break;
+                case '<<':
+                    value = 1;
+                    break;
+                case '>>':
+                    value = @Model.Incidents.PageCount;
+                    break;
+                default:
+                    value = this.text;
+            }
+            if (value == '>' || value == '<') {
+            }
+            $("#Pnumber").val(parseInt(value));
+            $("#hidden").submit();
+        });
+
+    </script>
+}
